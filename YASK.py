@@ -51,12 +51,12 @@ __protocole = [[ 23, 10, 10, 10, 10, 10, 10],
 #                ~ZDSTGLBPRFUE#*OARHWPKTS
 __left_hand =  0b000000000000000111111111
 __right_hand = 0b011111111111100000000000
+__LED = Pin(25, Pin.OUT)
 
 class YACK:    
     def __init__(self):
         self.keymap = {}
-        self.inputs_start = 0 	#Timestamp (for debouncing)
-        self.inputs_max = 0 	#Bitmap (order is same as __inputs) 
+        self.inputs_max = 0 #Bitmap (order is same as __inputs) 
         self.buffer = bytearray(6)
         self.keys = [] #List of Pin objects corresponding to __inputs
         for i in __inputs:
@@ -75,14 +75,12 @@ class YACK:
     def loop(self):
         left, right, left_max, right_max = (0, 0, 0, 0) #bitmaps, like self.input_max
         already_written = False
+        timeStamp = 0
         
         while True:
             inputs = 0
             for i, v in enumerate(self.keys):
                 inputs += (v()^1) << i
-            #if (self.inputs_max == 0 and inputs > 0): #First keypress of the stroke
-                #time.sleep_ms(100)#debounce
-                #TODO: also debounce left or hand 1st key
             self.inputs_max = inputs | self.inputs_max
             left  = inputs & __left_hand
             right = inputs & __right_hand
@@ -94,12 +92,12 @@ class YACK:
                     if already_written:
                         already_written = False
                     else:
-                        #print("both", hex(left), " (",hex(left_max), "), ", hex(right), " (", hex(right_max), ") ", hex(self.inputs_max), "|", end="")
+                        __LED(1)
                         self.write()
                     self.inputs_max = 0
                     left_max, right_max = (0, 0)
                 elif (( left == 0 and left_max > 0) or (right == 0 and right_max > 0)) and FirstUpChordSend: #only released the left or right hand
-                    #print("l/r ", hex(left), " (",hex(left_max), "), ", hex(right), " (", hex(right_max), ") ", hex(self.inputs_max), "|", end="")
+                    __LED(1)
                     self.write()
                     self.inputs_max = inputs
                     if left == 0:
@@ -109,7 +107,7 @@ class YACK:
                     already_written = True #From now on, only repeat left or right hand releases will be registered, until all keys are released
                 
             time.sleep_ms(5)
-            #print(bin(inputs));time.sleep_ms(300)#Debug
+            __LED(0)
 
 c=YACK()
 c.loop()
