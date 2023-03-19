@@ -9,7 +9,7 @@ You now have 2 versions to choose from:
 * V1: is ortholinear, and uses Cherry-type key switches
 ![Photo of YASK V1](https://github.com/ttempe/YASK/blob/main/YASK_small.jpg?raw=true)
 
-* V2.1: has vertical stargger, is angled (10° each hand), requires Kailh Choc key switches (either with or without hot-swap sockets), and features a plate (optional). Moreover the left pinky and the left/right # and * are wired separately, allowing for more flexibility.
+* V2.1: has vertical stargger, is angled (10° each hand), requires Kailh Choc key switches (either with or without hot-swap sockets), and features optional key plates. Moreover the left pinky and the left/right # and * are wired separately, allowing for future evolutions.
 ![Photo of YASK V2 with custom copper finish](https://github.com/ttempe/YASK/blob/main/YASK%20V2.1%20copper%20finish_small.jpg?raw=true)
 
 Here you can find the design files for the PCB: 
